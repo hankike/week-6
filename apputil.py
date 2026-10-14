@@ -1,6 +1,7 @@
 # your code here ...
 
 import requests
+import pandas as pd
 
 
 class Genius:
@@ -41,3 +42,20 @@ class Genius:
         response.raise_for_status()
 
         return response.json()
+
+    def get_artists(self, search_terms):
+        """Get information for a list of artists."""
+        records = []
+
+        for search_term in search_terms:
+            artist_data = self.get_artist(search_term)
+            artist = artist_data["response"]["artist"]
+
+            records.append({
+                "search_term": search_term,
+                "artist_name": artist["name"],
+                "artist_id": artist["id"],
+                "followers_count": artist.get("followers_count")
+            })
+
+        return pd.DataFrame(records)
