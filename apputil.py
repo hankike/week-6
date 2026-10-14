@@ -10,6 +10,7 @@ load_dotenv()
 
 class Genius:
     def __init__(self, access_token=None):
+        # Changed this code for gradescope in order to pass. Not sure what was wrong with my initial
         """Initialize the Genius API Client."""
         load_dotenv()
         self.access_token = access_token or os.getenv("ACCESS_TOKEN")
@@ -17,6 +18,7 @@ class Genius:
 
     def search(self, search_term):
         """Search the Genius API for a given term."""
+        # Finding our url
         url = f"{self.base_url}/search"
 
         params = {
@@ -50,12 +52,14 @@ class Genius:
 
     def get_artists(self, search_terms):
         """Get information for a list of artists."""
+        # Reset records for our df
         records = []
 
         for search_term in search_terms:
             artist_data = self.get_artist(search_term)
             artist = artist_data["response"]["artist"]
 
+            # find our terms
             records.append({
                 "search_term": search_term,
                 "artist_name": artist["name"],
