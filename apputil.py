@@ -22,3 +22,22 @@ class Genius:
         response.raise_for_status()
 
         return response.json()
+
+    def get_artist(self, search_term):
+        # Here is how we search for the artist
+        search_data = self.search(search_term)
+
+        # Here we extract the "primary" artist ID from the first "hit"
+        artist_id = search_data["response"]["hits"][0]["result"]["primary_artist"]["id"]
+
+        # Now we request artist info
+        url = f"{self.base_url}/artists/{artist_id}"
+
+        params = {
+            "access_token": self.access_token
+        }
+
+        response = requests.get(url, params=params)
+        response.raise_for_status()
+
+        return response.json()
