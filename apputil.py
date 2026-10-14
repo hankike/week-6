@@ -1,13 +1,18 @@
 # your code here ...
 
+import os
 import requests
 import pandas as pd
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 class Genius:
-    def __init__(self, access_token):
+    def __init__(self, access_token=None):
         """Initialize the Genius API Client."""
-        self.access_token = access_token
+        load_dotenv()
+        self.access_token = access_token or os.getenv("ACCESS_TOKEN")
         self.base_url = "https://api.genius.com"
 
     def search(self, search_term):
